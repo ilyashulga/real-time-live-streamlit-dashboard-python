@@ -122,9 +122,9 @@ while(True):
         #column3, column4 = st.columns(2)
         # fill in those three columns with respective metrics or KPIs 
 
-        kpi1.metric(label="Optimizer Power", value=f"{round(power)} W")
-        kpi2.metric(label="Optimizer Voltage", value= f"{int(voltage)} V")
-        kpi3.metric(label="Connector Temperature", value= f"{round(temperature)} °C", delta= f"{round(temperature) - round(temperature_prev)} °C", delta_color="inverse")
+        kpi1.metric(label="Optimizer Power", value=f"{round(power, 1)} W")
+        kpi2.metric(label="Optimizer Voltage", value= f"{round(voltage, 1)} V")
+        kpi3.metric(label="Connector Temperature", value= f"{round(temperature, 1)} °C", delta= f"{round(temperature) - round(temperature_prev)} °C", delta_color="inverse")
 
         # create two columns for charts 
 
@@ -144,14 +144,14 @@ while(True):
         with graph_column2:
             #st.markdown("### Optimizer Output Voltage")
             fig2 = px.line(data_frame = df, y = 'Vout', x = 'Time')
-            fig2.update_xaxes(range=[timestamp_formated - timedelta(seconds=30) , timestamp_formated  + timedelta(seconds=90)])
+            fig2.update_xaxes(range=[timestamp_formated - timedelta(seconds=90) , timestamp_formated  + timedelta(seconds=30)])
             fig2.update_yaxes(range=[0, 50])
             st.write(fig2)
         with graph_column3:
             #st.markdown("### MC4 Connector Temperature")
             fig3 = px.line(data_frame = df, y = 'thermistor', x = 'Time')
-            fig3.update_xaxes(range=[timestamp_formated - timedelta(seconds=30) , timestamp_formated  + timedelta(seconds=90)])
-            fig2.update_yaxes(range=[0, 160])
+            fig3.update_xaxes(range=[timestamp_formated - timedelta(seconds=90) , timestamp_formated  + timedelta(seconds=30)])
+            fig3.update_yaxes(range=[0, 160])
             st.write(fig3)
         #st.markdown("### Detailed Data View")
         #st.dataframe(df)

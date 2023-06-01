@@ -6,11 +6,11 @@ import os
 
 def generate_voltage():
     """Simulates the generation of voltage values."""
-    return random.uniform(200, 240)  # Adjust the range as per your requirements
+    return random.uniform(25, 26)  # Adjust the range as per your requirements
 
 def generate_temperature():
     """Simulates the generation of voltage values."""
-    return random.uniform(50, 120)  # Adjust the range as per your requirements
+    return random.uniform(119, 120)  # Adjust the range as per your requirements
 def generate_ctm():
     """Simulates the generation of voltage values."""
     return random.randint(0, 1)  # Adjust the range as per your requirements
@@ -18,7 +18,7 @@ def generate_ctm():
 
 def calculate_power(voltage):
     """Calculates the power based on the voltage value."""
-    return (voltage ** 2) / 1000  # Adjust the formula as per your requirements
+    return (voltage * 10)  # Adjust the formula as per your requirements
 
 def save_to_csv(data, filename):
     """Saves the data to a CSV file, overwriting if it already exists."""
@@ -32,7 +32,7 @@ def save_to_csv(data, filename):
             writer.writerow(data)
 
 # Configuration
-num_readings = 10000  # Number of readings to generate
+num_readings = 100000  # Number of readings to generate
 delay = 0.5  # Delay in seconds between each reading
 output_file = 'measurements.csv'  # Output file name
 
