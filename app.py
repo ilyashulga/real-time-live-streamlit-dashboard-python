@@ -75,7 +75,7 @@ placeholder = st.empty()
 
 # near real-time / live feed simulation 
 
-for seconds in range(200):
+while(True):
 #while True: 
     df = pd.read_csv("measurements.csv").tail(200)
     #df['age_new'] = df['age'] * np.random.choice(range(1,5))
@@ -132,7 +132,8 @@ for seconds in range(200):
         with graph_column1:
             #st.markdown("### Optimizer Output Power")
             fig = px.line(data_frame = df, y = 'Power', x = 'Time')
-            fig.update_xaxes(range=[timestamp_formated - timedelta(seconds=30) , timestamp_formated  + timedelta(seconds=90)])
+            fig.update_xaxes(range=[timestamp_formated - timedelta(seconds=90) , timestamp_formated  + timedelta(seconds=30)])
+            fig.update_yaxes(range=[0, 300])
             st.write(fig)
             #img = data.astronaut()
             #fig4 = px.imshow(img, binary_format="jpeg", binary_compression_level=0)
@@ -144,11 +145,13 @@ for seconds in range(200):
             #st.markdown("### Optimizer Output Voltage")
             fig2 = px.line(data_frame = df, y = 'Vout', x = 'Time')
             fig2.update_xaxes(range=[timestamp_formated - timedelta(seconds=30) , timestamp_formated  + timedelta(seconds=90)])
+            fig2.update_yaxes(range=[0, 50])
             st.write(fig2)
         with graph_column3:
             #st.markdown("### MC4 Connector Temperature")
             fig3 = px.line(data_frame = df, y = 'thermistor', x = 'Time')
             fig3.update_xaxes(range=[timestamp_formated - timedelta(seconds=30) , timestamp_formated  + timedelta(seconds=90)])
+            fig2.update_yaxes(range=[0, 160])
             st.write(fig3)
         #st.markdown("### Detailed Data View")
         #st.dataframe(df)
