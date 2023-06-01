@@ -11,6 +11,10 @@ def generate_voltage():
 def generate_temperature():
     """Simulates the generation of voltage values."""
     return random.uniform(50, 120)  # Adjust the range as per your requirements
+def generate_ctm():
+    """Simulates the generation of voltage values."""
+    return random.randint(0, 1)  # Adjust the range as per your requirements
+
 
 def calculate_power(voltage):
     """Calculates the power based on the voltage value."""
@@ -28,12 +32,12 @@ def save_to_csv(data, filename):
             writer.writerow(data)
 
 # Configuration
-num_readings = 100  # Number of readings to generate
+num_readings = 10000  # Number of readings to generate
 delay = 0.5  # Delay in seconds between each reading
 output_file = 'measurements.csv'  # Output file name
 
 # Generate and save the measurements
-header = ['Timestamp', 'Voltage (V)', 'Power (W)', 'Temperature (C)']
+header = ['Time', 'Vout', 'Power', 'thermistor', 'Is_CTM']
 if not os.path.isfile(output_file):
     save_to_csv(header, output_file)
 
@@ -42,7 +46,8 @@ for _ in range(num_readings):
     voltage = generate_voltage()
     power = calculate_power(voltage)
     temperature = generate_temperature()
-    measurement = [timestamp, voltage, power, temperature]
+    is_ctm = generate_ctm()
+    measurement = [timestamp, voltage, power, temperature, is_ctm]
     save_to_csv(measurement, output_file)
     time.sleep(delay)
 
