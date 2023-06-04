@@ -29,10 +29,29 @@ title1, title2, title3 = st.columns(3)
 with title1:
     st.write('')
 with title2:
-    st.image(image_path, caption='', width = 400)
-    st.title("SenseConnect LIVE")
+    st.image(image_path, caption='', width = 500)
+    st.markdown(""" <style> .big-font2 {font-family: "Times New Roman", Times, serif; text-align: center; font-size:60px; color: black;  } </style> """, unsafe_allow_html=True) 
+    st.markdown('<p class="big-font2">SenseConnect LIVE</p>', unsafe_allow_html=True)
+    #st.title("SenseConnect LIVE")
 with title3:
     st.write('')
+
+# Adjust the font of a st.metric component
+st.markdown(
+    """
+<style>
+[data-testid="stImage"] {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+""",
+    unsafe_allow_html=True,
+)
+
+
+
 
 #set_background_color("#EB3434")  # Set background color to AliceBlue
 # dashboard title
@@ -100,12 +119,12 @@ while(True):
     #data_in = df.head(1)
 
     # creating KPIs 
-    power = df['Power'].iloc[-1]
-    voltage = df['Vout'].iloc[-1]
-    temperature = df['thermistor'].iloc[-1]
-    temperature_prev = df['thermistor'].iloc[-2]
+    power = float(df['Power'].iloc[-1])
+    voltage = float(df['Vout'].iloc[-1])
+    temperature = float(df['thermistor'].iloc[-1])
+    temperature_prev = float(df['thermistor'].iloc[-2])
     timestamp = df['Time'].iloc[-1]
-    sense_connect = df['Is_CTM'].iloc[-1]
+    sense_connect = int(df['Is_CTM'].iloc[-1])
     timestamp_formated = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
     print(timestamp)
     print(power)
@@ -160,9 +179,9 @@ while(True):
         #column3, column4 = st.columns(2)
         # fill in those three columns with respective metrics or KPIs 
 
-        kpi1.metric(label="Optimizer Power", value=f"{round(power, 1)} W")
-        kpi2.metric(label="Optimizer Voltage", value= f"{round(voltage, 1)} V")
-        kpi3.metric(label="Connector Temperature", value= f"{round(temperature, 1)} °C", delta= f"{round(temperature) - round(temperature_prev)} °C", delta_color="inverse")
+        kpi1.metric(label="Optimizer Power", value=f"{round(power, 2)} W")
+        kpi2.metric(label="Optimizer Voltage", value= f"{round(voltage, 2)} V")
+        kpi3.metric(label="Connector Temperature", value= f"{round(temperature, 2)} °C", delta= f"{round(temperature - temperature_prev, 2)} °C", delta_color="inverse")
 
         # create two columns for charts 
 
@@ -200,6 +219,8 @@ while(True):
         with graph_column3:
             #st.markdown("### MC4 Connector Temperature")
             fig3 = px.line(data_frame = df, y = 'thermistor', x = 'Time')
+            fig3.add_hline(y=125, line_color="red")
+            fig3.add_hrect(y0=125, y1=160, line_width=0, fillcolor="red", opacity=0.1)
             fig3.update_xaxes(range=[timestamp_formated - timedelta(seconds=90) , timestamp_formated  + timedelta(seconds=30)], title=dict(text='', font=dict(
                 size=32
                 )
