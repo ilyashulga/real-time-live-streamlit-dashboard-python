@@ -5,6 +5,7 @@ import time # to simulate a real time data, time loop
 import plotly.express as px # interactive charts 
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
+import random
 
 #import streamlit_extras.let_it_rain as rain
 
@@ -151,7 +152,7 @@ while(True):
             st.markdown(""" <style> .big-font { text-align: center ;font-size:32px; color: white; background-color: grey;} </style> """, unsafe_allow_html=True) 
             st.markdown('<p class="big-font">Monitoring Optimizer Output Connector Temperature...</p>', unsafe_allow_html=True)
             #st.write('Monitoring Optimizer Output Connector Temperature...')
-        kpi4, kpi2, kpi1, kpi3  = st.columns(4)
+        kpi6, kpi5, kpi4, kpi2, kpi1, kpi3  = st.columns(6)
         #sense_connect_column = st.columns(1)
         
         #st.markdown(
@@ -180,7 +181,8 @@ while(True):
         #kpi1, kpi2 = st.columns(2)
         #column3, column4 = st.columns(2)
         # fill in those three columns with respective metrics or KPIs 
-
+        kpi6.metric(label="String Power", value=f"{round(power*11*random.uniform(0.99, 1.01))} W")
+        kpi5.metric(label="String Voltage", value=f"{round(voltage*11*random.uniform(0.99, 1.01), 2)} V")
         kpi1.metric(label="Optimizer Power", value=f"{round(power, 2)} W")
         kpi2.metric(label="Optimizer Voltage", value= f"{round(voltage, 2)} V")
         kpi4.metric(label="PV Voltage", value= f"{round(v_in, 2)} V")
@@ -196,7 +198,7 @@ while(True):
                 size=32
                 )
             ))
-            fig.update_yaxes(range=[0, 300], title=dict(text='Optimizer Power (W)', font=dict(
+            fig.update_yaxes(range=[0, 400], title=dict(text='Optimizer Power (W)', font=dict(
                 size=28
                 )
             ))
@@ -220,7 +222,7 @@ while(True):
                 size=32
                 )
             ))
-            fig2.update_yaxes(range=[0, 30], title=dict(text='Optimizer Voltage (V)', font=dict(
+            fig2.update_yaxes(range=[0, 38], title=dict(text='Optimizer Voltage (V)', font=dict(
                 size=28
                 )
             ))
@@ -234,13 +236,14 @@ while(True):
         with graph_column3:
             #st.markdown("### MC4 Connector Temperature")
             fig3 = px.line(data_frame = df, y = 'thermistor', x = 'Time')
-            fig3.add_hline(y=125, line_color="red")
-            fig3.add_hrect(y0=125, y1=160, line_width=0, fillcolor="red", opacity=0.1)
+            fig3.add_hline(y=90, line_color="red")
+            fig3.add_hrect(y0=90, y1=140, line_width=0, fillcolor="red", opacity=0.1)
+            fig3.add_hrect(y0=0, y1=40, line_width=0, fillcolor="green", opacity=0.1)
             fig3.update_xaxes(range=[timestamp_formated - timedelta(seconds=90) , timestamp_formated  + timedelta(seconds=30)], title=dict(text='', font=dict(
                 size=32
                 )
             ))
-            fig3.update_yaxes(range=[0, 160], title=dict(text='Connector Temperature (°C)', font=dict(
+            fig3.update_yaxes(range=[0, 140], title=dict(text='Connector Temperature (°C)', font=dict(
                 size=26
                 )
             ))
