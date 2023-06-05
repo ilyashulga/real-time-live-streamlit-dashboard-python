@@ -197,6 +197,12 @@ while(True):
                 size=32
                 )
             ))
+            fig.update_layout(
+                yaxis = dict(
+                tickfont = dict(size=20)))
+            fig.update_layout(
+                xaxis = dict(
+                tickfont = dict(size=20)))
             st.write(fig)
             #img = data.astronaut()
             #fig4 = px.imshow(img, binary_format="jpeg", binary_compression_level=0)
@@ -207,7 +213,7 @@ while(True):
         with graph_column2:
             #st.markdown("### Optimizer Output Voltage")
             fig2 = px.line(data_frame = df, y = 'Vout', x = 'Time')
-            fig2.update_xaxes(range=[timestamp_formated - timedelta(seconds=90) , timestamp_formated  + timedelta(seconds=30)], title=dict(text='Time', font=dict(
+            fig2.update_xaxes(range=[timestamp_formated - timedelta(seconds=90) , timestamp_formated  + timedelta(seconds=30)], title=dict(text='Time (HH:MM:SS)', font=dict(
                 size=32
                 )
             ))
@@ -215,6 +221,12 @@ while(True):
                 size=32
                 )
             ))
+            fig2.update_layout(
+                yaxis = dict(
+                tickfont = dict(size=20)))
+            fig2.update_layout(
+                xaxis = dict(
+                tickfont = dict(size=20)))
             st.write(fig2)
         with graph_column3:
             #st.markdown("### MC4 Connector Temperature")
@@ -229,6 +241,12 @@ while(True):
                 size=32
                 )
             ))
+            fig3.update_layout(
+                yaxis = dict(
+                tickfont = dict(size=20)))
+            fig3.update_layout(
+                xaxis = dict(
+                tickfont = dict(size=20)))
             st.write(fig3)
         #st.markdown("### Detailed Data View")
         #st.dataframe(df)
