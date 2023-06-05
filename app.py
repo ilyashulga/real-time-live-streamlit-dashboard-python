@@ -121,6 +121,7 @@ while(True):
     # creating KPIs 
     power = float(df['Power'].iloc[-1])
     voltage = float(df['Vout'].iloc[-1])
+    v_in = float(df['Vin'].iloc[-1])
     temperature = float(df['thermistor'].iloc[-1])
     temperature_prev = float(df['thermistor'].iloc[-2])
     timestamp = df['Time'].iloc[-1]
@@ -129,6 +130,7 @@ while(True):
     print(timestamp)
     print(power)
     print(voltage)
+    print(v_in)
     print(sense_connect)
     #count_married = int(df[(df["marital"]=='married')]['marital'].count() + np.random.choice(range(1,30)))
     
@@ -146,11 +148,11 @@ while(True):
                 
             #st.write('SenseConnect event Detected!')
         else:
-            st.markdown(""" <style> .big-font { text-align: center ;font-size:32px; color: black; } </style> """, unsafe_allow_html=True) 
+            st.markdown(""" <style> .big-font { text-align: center ;font-size:32px; color: white; background-color: grey;} </style> """, unsafe_allow_html=True) 
             st.markdown('<p class="big-font">Monitoring Optimizer Output Connector Temperature...</p>', unsafe_allow_html=True)
             #st.write('Monitoring Optimizer Output Connector Temperature...')
-        kpi1, kpi2, kpi3 = st.columns(3)
-        sense_connect_column = st.columns(1)
+        kpi4, kpi2, kpi1, kpi3  = st.columns(4)
+        #sense_connect_column = st.columns(1)
         
         #st.markdown(
         #    """
@@ -181,6 +183,7 @@ while(True):
 
         kpi1.metric(label="Optimizer Power", value=f"{round(power, 2)} W")
         kpi2.metric(label="Optimizer Voltage", value= f"{round(voltage, 2)} V")
+        kpi4.metric(label="PV Voltage", value= f"{round(v_in, 2)} V")
         kpi3.metric(label="Connector Temperature", value= f"{round(temperature, 2)} °C", delta= f"{round(temperature - temperature_prev, 2)} °C", delta_color="inverse")
 
         # create two columns for charts 
@@ -193,8 +196,8 @@ while(True):
                 size=32
                 )
             ))
-            fig.update_yaxes(range=[0, 300], title=dict(text='Power (W)', font=dict(
-                size=32
+            fig.update_yaxes(range=[0, 300], title=dict(text='Optimizer Power (W)', font=dict(
+                size=28
                 )
             ))
             fig.update_layout(
@@ -217,8 +220,8 @@ while(True):
                 size=32
                 )
             ))
-            fig2.update_yaxes(range=[0, 30], title=dict(text='Voltage (V)', font=dict(
-                size=32
+            fig2.update_yaxes(range=[0, 30], title=dict(text='Optimizer Voltage (V)', font=dict(
+                size=28
                 )
             ))
             fig2.update_layout(
@@ -237,8 +240,8 @@ while(True):
                 size=32
                 )
             ))
-            fig3.update_yaxes(range=[0, 160], title=dict(text='Temperature (°C)', font=dict(
-                size=32
+            fig3.update_yaxes(range=[0, 160], title=dict(text='Connector Temperature (°C)', font=dict(
+                size=26
                 )
             ))
             fig3.update_layout(
