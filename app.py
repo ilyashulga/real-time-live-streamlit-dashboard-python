@@ -25,7 +25,7 @@ def create_parameter_panel():
 df = pd.read_csv("measurements.csv")
 
 st.set_page_config(
-    page_title = 'Solaredge SenseConnect LIVE',
+    page_title = 'SenseConnect LIVE',
     page_icon = '✅',
     layout = 'wide'
     
@@ -49,7 +49,7 @@ with title3:
 st.markdown(
     """
 <style>
-[data-testid="stImage"] {
+[data-testid="stImage"] > div {
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -71,7 +71,7 @@ st.markdown(
 st.markdown(
     """
 <style>
-[data-testid="stMetricValue"] {
+[data-testid="stMetricValue"] > div {
     font-size: 60px;
     text-align: center;
 }
@@ -84,7 +84,7 @@ st.markdown(
 st.markdown(
     """
 <style>
-[data-testid="stMetricLabel"] {
+[data-testid="stMetricLabel"] > div {
     font-size: 30px;
     text-align: center;
 }
@@ -190,13 +190,20 @@ while(True):
         graph_column1, graph_column2, graph_column3 = st.columns(3)
         #kpi1, kpi2 = st.columns(2)
         #column3, column4 = st.columns(2)
-        # fill in those three columns with respective metrics or KPIs 
-        kpi6.metric(label="String Power", value=f"{round(power*opt_in_string*random.uniform(0.99, 1.01))} W")
-        kpi5.metric(label="String Voltage", value=f"{round(voltage*opt_in_string*random.uniform(0.99, 1.01), 2)} V")
-        kpi1.metric(label="Optimizer Power", value=f"{round(power, 2)} W")
-        kpi2.metric(label="Optimizer Voltage", value= f"{round(voltage, 2)} V")
-        kpi4.metric(label="PV Voltage", value= f"{round(v_in, 2)} V")
-        kpi3.metric(label="Connector Temperature", value= f"{round(temperature, 2)} °C", delta= f"{round(temperature - temperature_prev, 2)} °C", delta_color="inverse")
+        # fill in those three columns with respective metrics or KPIs
+        st.markdown(""" <style> .big-metric { text-align: center ;font-size:30px; color: black; background-color: white;} </style> """, unsafe_allow_html=True)
+        kpi6.markdown('<p class="big-metric">String Power</p>', unsafe_allow_html=True)
+        kpi6.metric(label='String Power', value=f"{round(power*opt_in_string*random.uniform(0.99, 1.01))} W", label_visibility="hidden")
+        kpi5.markdown('<p class="big-metric">String Voltage</p>', unsafe_allow_html=True)
+        kpi5.metric(label="String Voltage", value=f"{round(voltage*opt_in_string*random.uniform(0.99, 1.01), 2)} V", label_visibility="hidden")
+        kpi1.markdown('<p class="big-metric">Optimizer Power</p>', unsafe_allow_html=True)
+        kpi1.metric(label="Optimizer Power", value=f"{round(power, 2)} W", label_visibility="hidden")
+        kpi2.markdown('<p class="big-metric">Optimizer Voltage</p>', unsafe_allow_html=True)
+        kpi2.metric(label="Optimizer Voltage", value= f"{round(voltage, 2)} V", label_visibility="hidden")
+        kpi4.markdown('<p class="big-metric">PV Voltage</p>', unsafe_allow_html=True)
+        kpi4.metric(label="PV Voltage", value= f"{round(v_in, 2)} V", label_visibility="hidden")
+        kpi3.markdown('<p class="big-metric">Connector Temperature</p>', unsafe_allow_html=True)
+        kpi3.metric(label="Connector Temperature", value= f"{round(temperature, 2)} °C", delta= f"{round(temperature - temperature_prev, 2)} °C", delta_color="inverse", label_visibility="hidden")
 
         # create two columns for charts 
 
