@@ -12,7 +12,15 @@ import random
 # read csv from a github repo
 #df = pd.read_csv("https://raw.githubusercontent.com/Lexie88rus/bank-marketing-analysis/master/bank.csv")
 
+def create_parameter_panel():
+    st.sidebar.subheader("Parameters")
+    # Add input fields for your parameters
+    #parameter1 = st.sidebar.text_input("Parameter 1", "")
+    opt_string_count = st.sidebar.slider("Number of oprimizers in string", 7, 28, 11)
+    #parameter2 = st.sidebar.slider("Parameter 2", 0, 100, 50)
+    #parameter3 = st.sidebar.selectbox("Parameter 3", ["Option 1", "Option 2", "Option 3"])
 
+    return opt_string_count
 
 df = pd.read_csv("measurements.csv")
 
@@ -106,6 +114,8 @@ placeholder = st.empty()
 
 # dataframe filter 
 
+# Create the side panel
+opt_in_string = create_parameter_panel()
 #df = df[df['job']==job_filter]
 
 # near real-time / live feed simulation 
@@ -181,8 +191,8 @@ while(True):
         #kpi1, kpi2 = st.columns(2)
         #column3, column4 = st.columns(2)
         # fill in those three columns with respective metrics or KPIs 
-        kpi6.metric(label="String Power", value=f"{round(power*11*random.uniform(0.99, 1.01))} W")
-        kpi5.metric(label="String Voltage", value=f"{round(voltage*11*random.uniform(0.99, 1.01), 2)} V")
+        kpi6.metric(label="String Power", value=f"{round(power*opt_in_string*random.uniform(0.99, 1.01))} W")
+        kpi5.metric(label="String Voltage", value=f"{round(voltage*opt_in_string*random.uniform(0.99, 1.01), 2)} V")
         kpi1.metric(label="Optimizer Power", value=f"{round(power, 2)} W")
         kpi2.metric(label="Optimizer Voltage", value= f"{round(voltage, 2)} V")
         kpi4.metric(label="PV Voltage", value= f"{round(v_in, 2)} V")
