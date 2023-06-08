@@ -6,17 +6,19 @@ import os
 
 def generate_voltage():
     """Simulates the generation of voltage values."""
-    return random.uniform(25, 26)  # Adjust the range as per your requirements
+    return random.uniform(30, 31)  # Adjust the range as per your requirements
 def generate_vin():
     """Simulates the generation of voltage values."""
-    return random.uniform(49, 50)  # Adjust the range as per your requirements
+    return random.uniform(41.0, 41.5)  # Adjust the range as per your requirements
 
 def generate_temperature():
     """Simulates the generation of voltage values."""
     return random.uniform(119, 120)  # Adjust the range as per your requirements
-def generate_ctm():
+def generate_ctm(p):
     """Simulates the generation of voltage values."""
-    return random.randint(0, 1)  # Adjust the range as per your requirements
+    weights = [p, 1 - p]
+    return random.choices([1, 0], weights=weights)[0]
+    #return random.randint(0, 1)  # Adjust the range as per your requirements
 
 
 def calculate_power(voltage):
@@ -50,7 +52,7 @@ for _ in range(num_readings):
     v_in = generate_vin()
     power = calculate_power(voltage)
     temperature = generate_temperature()
-    is_ctm = generate_ctm()
+    is_ctm = generate_ctm(0.05)
     measurement = [timestamp, v_in, voltage, power, temperature, is_ctm]
     save_to_csv(measurement, output_file)
     time.sleep(delay)
