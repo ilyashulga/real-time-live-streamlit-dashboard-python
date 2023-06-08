@@ -6,6 +6,7 @@ import plotly.express as px # interactive charts
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
 import random
+from streamlit_extras.let_it_rain import rain
 
 #import streamlit_extras.let_it_rain as rain
 
@@ -16,17 +17,20 @@ def create_parameter_panel():
     st.sidebar.subheader("Parameters")
     # Add input fields for your parameters
     #parameter1 = st.sidebar.text_input("Parameter 1", "")
-    opt_string_count = st.sidebar.slider("Number of oprimizers in string", 7, 28, 11)
+    opt_string_count = st.sidebar.slider("Number of oprimizers in string", 7, 28, 13)
     #parameter2 = st.sidebar.slider("Parameter 2", 0, 100, 50)
     #parameter3 = st.sidebar.selectbox("Parameter 3", ["Option 1", "Option 2", "Option 3"])
 
     return opt_string_count
 
+triggered = 0
+
+
 df = pd.read_csv("measurements.csv")
 
 st.set_page_config(
-    page_title = 'SenseConnect LIVE',
-    page_icon = '✅',
+    page_title = 'Sense Connect - LIVE Demo ',
+    page_icon = '🌡️',
     layout = 'wide'
     
 )
@@ -38,29 +42,30 @@ title1, title2, title3 = st.columns(3)
 with title1:
     st.write('')
 with title2:
-    st.image(image_path, caption='', width = 500)
-    st.markdown(""" <style> .big-font2 {font-family: "Times New Roman", Times, serif; text-align: center; font-size:60px; color: black;  } </style> """, unsafe_allow_html=True) 
-    st.markdown('<p class="big-font2">SenseConnect LIVE</p>', unsafe_allow_html=True)
+    
+    st.markdown(""" <style> .big-font2 {font-family: "Times New Roman", Times, serif; text-align: center; font-size:46px; color: black;  } </style> """, unsafe_allow_html=True) 
+    st.markdown('<p class="big-font2">Sense Connect - LIVE Demo</p>', unsafe_allow_html=True)
     #st.title("SenseConnect LIVE")
 with title3:
+    # Adjust the font of a st.metric component
+    st.image(image_path, caption='', width = 200)
     st.write('')
 
-# Adjust the font of a st.metric component
+
+
+# Add CSS styling to align the image to the right
 st.markdown(
     """
 <style>
-[data-testid="stImage"] > div {
+[data-testid="stImage"] {
     display: block;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: 0;
 }
 </style>
 """,
     unsafe_allow_html=True,
 )
-
-
-
 
 #set_background_color("#EB3434")  # Set background color to AliceBlue
 # dashboard title
@@ -155,16 +160,16 @@ while(True):
         if sense_connect:
             #st.header(':red[SenseConnect event Detected!]')
             st.markdown(""" <style> .big-font { text-align: center; background-color: red; font-size:32px; color: white; !important; } </style> """, unsafe_allow_html=True) 
-            st.markdown('<p class="big-font">SenseConnect event Detected!!!</p>', unsafe_allow_html=True)
-                
+            st.markdown('<p class="big-font">Sense Connect event Detected!</p>', unsafe_allow_html=True)
+            #st.balloons()
             #st.write('SenseConnect event Detected!')
         else:
             st.markdown(""" <style> .big-font { text-align: center ;font-size:32px; color: white; background-color: grey;} </style> """, unsafe_allow_html=True) 
-            st.markdown('<p class="big-font">Monitoring Optimizer Output Connector Temperature...</p>', unsafe_allow_html=True)
+            st.markdown('<p class="big-font">Monitoring power optimizer output connector temperature...</p>', unsafe_allow_html=True)
             #st.write('Monitoring Optimizer Output Connector Temperature...')
         kpi6, kpi5, kpi4, kpi2, kpi1, kpi3  = st.columns(6)
         #sense_connect_column = st.columns(1)
-        
+
         #st.markdown(
         #    """
         #    <style>
@@ -188,10 +193,11 @@ while(True):
         
 
         graph_column1, graph_column2, graph_column3 = st.columns(3)
+
         #kpi1, kpi2 = st.columns(2)
         #column3, column4 = st.columns(2)
         # fill in those three columns with respective metrics or KPIs
-        st.markdown(""" <style> .big-metric { text-align: center ;font-size:30px; color: black; background-color: white;} </style> """, unsafe_allow_html=True)
+        st.markdown(""" <style> .big-metric { text-align: center ;font-size:28px; color: black; background-color: white;} </style> """, unsafe_allow_html=True)
         kpi6.markdown('<p class="big-metric">String Power</p>', unsafe_allow_html=True)
         kpi6.metric(label='String Power', value=f"{round(power*opt_in_string*random.uniform(0.99, 1.01))} W", label_visibility="hidden")
         kpi5.markdown('<p class="big-metric">String Voltage</p>', unsafe_allow_html=True)
@@ -210,6 +216,8 @@ while(True):
         #fig_col1, fig_col2, fig_col3 = st.columns(3)
         with graph_column1:
             #st.markdown("### Optimizer Output Power")
+            st.markdown(""" <style> .big-font3 { text-align: center ;font-size:32px; color: black; background-color: white;} </style> """, unsafe_allow_html=True)
+            st.markdown('<p class="big-font3">Power Optimizer Power</p>', unsafe_allow_html=True)
             fig = px.line(data_frame = df, y = 'Power', x = 'Time')
             fig.update_xaxes(range=[timestamp_formated - timedelta(seconds=90) , timestamp_formated  + timedelta(seconds=30)], title=dict(text='', font=dict(
                 size=32
@@ -233,9 +241,9 @@ while(True):
             #fig4.update_yaxes(showticklabels=False)
             #st.write(fig4)
         with graph_column2:
-            #st.markdown("### Optimizer Output Voltage")
+            st.markdown('<p class="big-font3">Power Optimizer Voltage</p>', unsafe_allow_html=True)
             fig2 = px.line(data_frame = df, y = 'Vout', x = 'Time')
-            fig2.update_xaxes(range=[timestamp_formated - timedelta(seconds=90) , timestamp_formated  + timedelta(seconds=30)], title=dict(text='Time (HH:MM:SS)', font=dict(
+            fig2.update_xaxes(range=[timestamp_formated - timedelta(seconds=90) , timestamp_formated  + timedelta(seconds=30)], title=dict(text='Time', font=dict(
                 size=32
                 )
             ))
@@ -251,7 +259,7 @@ while(True):
                 tickfont = dict(size=20)))
             st.write(fig2)
         with graph_column3:
-            #st.markdown("### MC4 Connector Temperature")
+            st.markdown('<p class="big-font3">Connector temperature</p>', unsafe_allow_html=True)
             fig3 = px.line(data_frame = df, y = 'thermistor', x = 'Time')
             fig3.add_hline(y=90, line_color="red")
             fig3.add_hrect(y0=90, y1=140, line_width=0, fillcolor="red", opacity=0.1)
@@ -274,7 +282,7 @@ while(True):
         #st.markdown("### Detailed Data View")
         #st.dataframe(df)
 
-        
+
 
         #rain(
         #    emoji="🎈",
@@ -284,6 +292,14 @@ while(True):
         #)
 
         time.sleep(1)
+    if sense_connect:
+            #st.header(':red[SenseConnect event Detected!]')
+            rain(
+                    emoji="🌡️",
+                    font_size=54,
+                    falling_speed=5,
+                    animation_length=1,
+                )
     #placeholder.empty()
 
 
