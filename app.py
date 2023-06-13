@@ -6,7 +6,7 @@ import plotly.express as px # interactive charts
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
 import random
-from streamlit_extras.let_it_rain import rain
+#from streamlit_extras.let_it_rain import rain
 
 #import streamlit_extras.let_it_rain as rain
 
