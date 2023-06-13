@@ -24,9 +24,9 @@ def create_parameter_panel():
     return opt_string_count
 
 triggered = 0
+PATH = "C:\\Users\\lab-opt\\Documents\\Tests\\InterSolar\\measurements.csv"
 
-
-df = pd.read_csv("measurements.csv")
+df = pd.read_csv(PATH)
 
 st.set_page_config(
     page_title = 'Sense Connect - LIVE Demo ',
@@ -43,12 +43,12 @@ with title1:
     st.write('')
 with title2:
     
-    st.markdown(""" <style> .big-font2 {font-family: "Times New Roman", Times, serif; text-align: center; font-size:46px; color: black;  } </style> """, unsafe_allow_html=True) 
+    st.markdown(""" <style> .big-font2 {font-family: "Times New Roman", Times, serif; text-align: center; font-size:60px; color: black;  } </style> """, unsafe_allow_html=True) 
     st.markdown('<p class="big-font2">Sense Connect - LIVE Demo</p>', unsafe_allow_html=True)
     #st.title("SenseConnect LIVE")
 with title3:
     # Adjust the font of a st.metric component
-    st.image(image_path, caption='', width = 200)
+    st.image(image_path, caption='', width = 400)
     st.write('')
 
 
@@ -60,7 +60,7 @@ st.markdown(
 [data-testid="stImage"] {
     display: block;
     margin-left: auto;
-    margin-right: 0;
+    margin-right: 50;
 }
 </style>
 """,
@@ -127,7 +127,7 @@ opt_in_string = create_parameter_panel()
 
 while(True):
 #while True: 
-    df = pd.read_csv("measurements.csv").tail(200)
+    df = pd.read_csv(PATH).tail(200)
     #df['age_new'] = df['age'] * np.random.choice(range(1,5))
     #df['balance_new'] = df['balance'] * np.random.choice(range(1,5))
 
@@ -159,14 +159,18 @@ while(True):
         #st.write('1 + 1 = ', 2)
         if sense_connect:
             #st.header(':red[SenseConnect event Detected!]')
-            st.markdown(""" <style> .big-font { text-align: center; background-color: red; font-size:32px; color: white; !important; } </style> """, unsafe_allow_html=True) 
-            st.markdown('<p class="big-font">Sense Connect event Detected!</p>', unsafe_allow_html=True)
-            #st.balloons()
+            st.markdown(""" <style> .big-font { text-align: center; background-color: red; font-size:42px; color: white; !important; } </style> """, unsafe_allow_html=True) 
+            st.markdown('<p class="big-font">SenseConnect event Detected!!!</p>', unsafe_allow_html=True)
+            #st.balloons()    
             #st.write('SenseConnect event Detected!')
         else:
-            st.markdown(""" <style> .big-font { text-align: center ;font-size:32px; color: white; background-color: grey;} </style> """, unsafe_allow_html=True) 
+            st.markdown(""" <style> .big-font { text-align: center ;font-size:42px; color: white; background-color: grey;} </style> """, unsafe_allow_html=True) 
             st.markdown('<p class="big-font">Monitoring power optimizer output connector temperature...</p>', unsafe_allow_html=True)
             #st.write('Monitoring Optimizer Output Connector Temperature...')
+        
+        st.write('')
+        st.write('')
+        st.write('')
         kpi6, kpi5, kpi4, kpi2, kpi1, kpi3  = st.columns(6)
         #sense_connect_column = st.columns(1)
 
@@ -197,7 +201,7 @@ while(True):
         #kpi1, kpi2 = st.columns(2)
         #column3, column4 = st.columns(2)
         # fill in those three columns with respective metrics or KPIs
-        st.markdown(""" <style> .big-metric { text-align: center ;font-size:28px; color: black; background-color: white;} </style> """, unsafe_allow_html=True)
+        st.markdown(""" <style> .big-metric { text-align: center ;font-size:30px; color: black; background-color: white;} </style> """, unsafe_allow_html=True)
         kpi6.markdown('<p class="big-metric">String Power</p>', unsafe_allow_html=True)
         kpi6.metric(label='String Power', value=f"{round(power*opt_in_string*random.uniform(0.99, 1.01))} W", label_visibility="hidden")
         kpi5.markdown('<p class="big-metric">String Voltage</p>', unsafe_allow_html=True)
@@ -205,13 +209,18 @@ while(True):
         kpi1.markdown('<p class="big-metric">Optimizer Power</p>', unsafe_allow_html=True)
         kpi1.metric(label="Optimizer Power", value=f"{round(power, 2)} W", label_visibility="hidden")
         kpi2.markdown('<p class="big-metric">Optimizer Voltage</p>', unsafe_allow_html=True)
-        kpi2.metric(label="Optimizer Voltage", value= f"{round(voltage, 2)} V", label_visibility="hidden")
+        kpi2.metric(label="Optimizer Voltage", value= f"{round(voltage*random.uniform(0.999, 1.001), 2)} V", label_visibility="hidden")
         kpi4.markdown('<p class="big-metric">PV Voltage</p>', unsafe_allow_html=True)
-        kpi4.metric(label="PV Voltage", value= f"{round(v_in, 2)} V", label_visibility="hidden")
+        kpi4.metric(label="PV Voltage", value= f"{round(v_in*random.uniform(0.999, 1.001), 2)} V", label_visibility="hidden")
         kpi3.markdown('<p class="big-metric">Connector Temperature</p>', unsafe_allow_html=True)
         kpi3.metric(label="Connector Temperature", value= f"{round(temperature, 2)} °C", delta= f"{round(temperature - temperature_prev, 2)} °C", delta_color="inverse", label_visibility="hidden")
 
         # create two columns for charts 
+        st.write('')
+        st.write('')
+        st.write('')
+        st.write('')
+        st.write('')
 
         #fig_col1, fig_col2, fig_col3 = st.columns(3)
         with graph_column1:
@@ -292,14 +301,15 @@ while(True):
         #)
 
         time.sleep(1)
-    if sense_connect:
+    #if sense_connect:
+        #st.balloons()
             #st.header(':red[SenseConnect event Detected!]')
-            rain(
-                    emoji="🌡️",
-                    font_size=54,
-                    falling_speed=5,
-                    animation_length=1,
-                )
+    #        rain(
+    #                emoji="🌡️",
+    #                font_size=54,
+    #                falling_speed=5,
+    #                animation_length=1,
+    #            )
     #placeholder.empty()
 
 
